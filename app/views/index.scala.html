@@ -1,0 +1,7 @@
+@(user: lib.model.User.EmbeddedId)
+
+@main("Welcome to Play") {
+  <h1>Welcome to Play!</h1>
+
+  @{user.v.username}
+}
