@@ -5,8 +5,7 @@ import play.api.libs.json._
 import lib.model.{User, Document}
 
 case class JsValueReadsDocument(
-  url:      String,
-  username: String
+  url: String,
 )
 
 object JsValueReadsDocument {

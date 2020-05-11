@@ -12,6 +12,7 @@ import mvc.action.AuthenticationAction
 
 import json.reads.document.JsValueReadsDocument
 
+import lib.model.User
 import lib.persistence.default.{UserRepository, DocumentRepository}
 
 class DocumentPostController @Inject()(
@@ -19,16 +20,16 @@ class DocumentPostController @Inject()(
 ) (implicit val ec: ExecutionContext) 
 extends BaseController with BaseExtensionMethods{
 
-  def post = (Action andThen AuthenticationAction()).async { implicit req =>
+  def post = (Action andThen AuthenticationAction()).async { implicit request =>
     
-    val jsDocument = JsonHelper.bindFromRequest[JsValueReadsDocument]
+    val uid: User.Id = request.authToken.v.uid
+    val jsDocument   = JsonHelper.bindFromRequest[JsValueReadsDocument]
     
     jsDocument match {
       case Left(error) => Future.successful(error)
       case Right(document) => {
         for {
-          Some(user) <- UserRepository.getByUsername(document.username)
-          _          <- DocumentRepository.add(JsValueReadsDocument.toWithNoId(document, user.id))
+          _          <- DocumentRepository.add(JsValueReadsDocument.toWithNoId(document, uid))
         } yield NoContent
       }
     }
