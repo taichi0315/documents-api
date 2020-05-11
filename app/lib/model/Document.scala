@@ -25,7 +25,7 @@ object Document {
   type EmbeddedId = Entity.EmbeddedId[Id, Document]
 
   // INSERT時のIDがAutoincrementのため,IDなしであることを示すオブジェクトに変換
-  def apply(url: String, userId: String): WithNoId = {
+  def apply(url: String, userId: User.Id): WithNoId = {
     new Entity.WithNoId(
       new Document(
         id     = None,
