@@ -7,6 +7,8 @@
 POST    /auth/signup                controllers.auth.AuthSignUpController.post
 POST    /auth/signin                controllers.auth.AuthSignInController.post
 DELETE  /auth/signout               controllers.auth.AuthSignOutController.delete
+POST    /auth/valid-username        controllers.auth.AuthValidUsernameController.post()
+POST    /auth/valid-email           controllers.auth.AuthValidEmailController.post()
 
 GET     /users                      controllers.user.UserListController.findAll
 

@@ -4,8 +4,6 @@ import ixias.model._
 
 import java.time.LocalDateTime
 
-import lib.model.User
-
 // ユーザーを表すモデル
 //~~~~~~~~~~~~~~~~~~~~
 import UserDetail._
