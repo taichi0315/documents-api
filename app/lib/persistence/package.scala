@@ -10,5 +10,6 @@ package object persistence {
     object UserAuthRepository   extends UserAuthRepository
     object UserDetailRepository extends UserDetailRepository
     object AuthTokenRepository  extends AuthTokenRepository
+    object DocumentRepository   extends DocumentRepository
   }
 }
