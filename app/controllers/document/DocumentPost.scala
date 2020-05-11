@@ -8,6 +8,8 @@ import scala.concurrent.{Future, ExecutionContext}
 
 import ixias.play.api.mvc.BaseExtensionMethods
 
+import mvc.action.AuthenticationAction
+
 import json.reads.document.JsValueReadsDocument
 
 import lib.persistence.default.{UserRepository, DocumentRepository}
@@ -17,7 +19,7 @@ class DocumentPostController @Inject()(
 ) (implicit val ec: ExecutionContext) 
 extends BaseController with BaseExtensionMethods{
 
-  def post = Action.async { implicit req =>
+  def post = (Action andThen AuthenticationAction()).async { implicit req =>
     
     val jsDocument = JsonHelper.bindFromRequest[JsValueReadsDocument]
     
