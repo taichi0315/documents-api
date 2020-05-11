@@ -8,7 +8,7 @@ import play.api.libs.json._
 
 import mvc.action.AuthenticationAction
 
-import json.writes.JsValueWritesUser
+import json.writes.user.JsValueWritesUser
 
 import lib.model.User
 import lib.persistence.default.UserRepository

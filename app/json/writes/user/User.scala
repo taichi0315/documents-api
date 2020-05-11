@@ -1,4 +1,4 @@
-package json.writes
+package json.writes.user
 
 import java.time.LocalDate
 import play.api.libs.json._

@@ -7,8 +7,8 @@ import play.api.mvc._
 import play.api.libs.json._
 import ixias.play.api.mvc.BaseExtensionMethods
 
-import json.reads.JsValueReadsAuth
-import json.writes.JsValueWritesAuth
+import json.reads.auth.JsValueReadsAuthSignIn
+import json.writes.auth.JsValueWritesAuthSign
 
 import lib.model.{User, UserAuth}
 import lib.persistence.default.{UserRepository, UserAuthRepository, AuthTokenRepository}
@@ -21,7 +21,7 @@ extends BaseController with BaseExtensionMethods {
   
   def post() = Action.async { implicit request =>
     
-    val jsReadsAuth = JsonHelper.bindFromRequest[JsValueReadsAuth]
+    val jsReadsAuth = JsonHelper.bindFromRequest[JsValueReadsAuthSignIn]
 
     jsReadsAuth match {
       case Left(error) => Future.successful(error)
@@ -32,11 +32,11 @@ extends BaseController with BaseExtensionMethods {
             case true  =>
               for {
                 _               <- AuthTokenRepository.removeByUserId(userAuth.id)
-                aid             <- AuthTokenRepository.add(JsValueReadsAuth.toAuthToken(userAuth.id))
+                aid             <- AuthTokenRepository.add(JsValueReadsAuthSignIn.toAuthToken(userAuth.id))
                 Some(user)      <- UserRepository.get(userAuth.id)
                 Some(authToken) <- AuthTokenRepository.get(aid)
               } yield {
-                val jsWritesAuth = JsValueWritesAuth.toWrites(user, authToken)
+                val jsWritesAuth = JsValueWritesAuthSign.toWrites(user, authToken)
 
                 Ok(Json.toJson(jsWritesAuth))
               }

@@ -1,26 +1,26 @@
-package json.reads
+package json.reads.auth
 
 import java.util.UUID
 import play.api.libs.json._
 
 import lib.model.{User, UserAuth, AuthToken}
 
-case class JsValueReadsAuth(
-  username: Option[String],
+case class JsValueReadsAuthSignUp(
+  username: String,
   email:    String,
   password: String
 )
 
-object JsValueReadsAuth {
-  implicit val authReads = Json.reads[JsValueReadsAuth]
+object JsValueReadsAuthSignUp {
+  implicit val authReads = Json.reads[JsValueReadsAuthSignUp]
 
-  def toUser(auth: JsValueReadsAuth): User.WithNoId = {
+  def toUser(auth: JsValueReadsAuthSignUp): User.WithNoId = {
     User(
-      username = auth.username.get
+      username = auth.username
     )
   }
 
-  def toUserAuth(id: User.Id, auth: JsValueReadsAuth): UserAuth.EmbeddedId = {
+  def toUserAuth(id: User.Id, auth: JsValueReadsAuthSignUp): UserAuth.EmbeddedId = {
     UserAuth(
       id       = Some(id),
       email    = auth.email,

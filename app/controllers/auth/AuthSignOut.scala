@@ -9,9 +9,6 @@ import ixias.play.api.mvc.BaseExtensionMethods
 
 import mvc.action.AuthenticationAction
 
-import json.reads.JsValueReadsAuth
-import json.writes.JsValueWritesAuth
-
 import lib.model.AuthToken
 import lib.persistence.default.{UserRepository, UserAuthRepository, AuthTokenRepository}
 
