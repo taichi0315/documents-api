@@ -15,8 +15,8 @@ case class UserDetailTable[P <: JdbcProfile]()(implicit val driver: P)
   // Definition of DataSourceName
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   lazy val dsn = Map(
-    "master" -> DataSourceName("ixias.db.mysql://master/auth_api"),
-    "slave"  -> DataSourceName("ixias.db.mysql://slave/auth_api")
+    "master" -> DataSourceName("ixias.db.mysql://master/documents_api"),
+    "slave"  -> DataSourceName("ixias.db.mysql://slave/documents_api")
   )
 
   // Definition of Query
