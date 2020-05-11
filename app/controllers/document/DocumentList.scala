@@ -34,5 +34,4 @@ extends BaseController {
       Ok(Json.toJson(jsDocumentSeq))
     }
   }
-
 }
