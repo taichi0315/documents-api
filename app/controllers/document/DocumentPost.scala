@@ -8,25 +8,25 @@ import scala.concurrent.{Future, ExecutionContext}
 
 import ixias.play.api.mvc.BaseExtensionMethods
 
-import json.reads.JsValueReadsDocument
-import json.writes.{JsValueWritesTodo, JsValueWritesCategory}
+import json.reads.document.JsValueReadsDocument
 
-import libs.persistence.default.{TodoRepository, CategoryRepository}
+import lib.persistence.default.{UserRepository, DocumentRepository}
 
-class TodoPostController @Inject()(
+class DocumentPostController @Inject()(
   val controllerComponents: ControllerComponents,
 ) (implicit val ec: ExecutionContext) 
 extends BaseController with BaseExtensionMethods{
 
   def post = Action.async { implicit req =>
     
-    val jsTodo = JsonHelper.bindFromRequest[JsValueReadsTodo]
+    val jsDocument = JsonHelper.bindFromRequest[JsValueReadsDocument]
     
-    jsTodo match {
+    jsDocument match {
       case Left(error) => Future.successful(error)
-      case Right(todo) => {
+      case Right(document) => {
         for {
-          _ <- TodoRepository.add(JsValueReadsTodo.toWithNoId(todo))
+          Some(user) <- UserRepository.getByUsername(document.username)
+          _          <- DocumentRepository.add(JsValueReadsDocument.toWithNoId(document, user.id))
         } yield NoContent
       }
     }
