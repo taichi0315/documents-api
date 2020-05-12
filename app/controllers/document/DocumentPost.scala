@@ -14,6 +14,7 @@ import json.reads.document.JsValueReadsDocument
 
 import lib.model.User
 import lib.persistence.default.{UserRepository, DocumentRepository}
+import lib.infrastructure.DocumentBrowser
 
 class DocumentPostController @Inject()(
   val controllerComponents: ControllerComponents,
@@ -29,8 +30,9 @@ extends BaseController with BaseExtensionMethods{
       case Left(error) => Future.successful(error)
       case Right(document) => {
         for {
-          _ <- DocumentRepository.add(JsValueReadsDocument.toWithNoId(document, uid))
-        } yield NoContent
+          browser <- DocumentBrowser.get(document.url)
+          _       <- DocumentRepository.add(JsValueReadsDocument.toWithNoId(document, uid))
+        } yield Ok(browser)
       }
     }
   }
