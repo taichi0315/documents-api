@@ -29,7 +29,7 @@ extends BaseController with BaseExtensionMethods{
       case Left(error) => Future.successful(error)
       case Right(document) => {
         for {
-          _          <- DocumentRepository.add(JsValueReadsDocument.toWithNoId(document, uid))
+          _ <- DocumentRepository.add(JsValueReadsDocument.toWithNoId(document, uid))
         } yield NoContent
       }
     }
