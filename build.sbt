@@ -16,4 +16,5 @@ libraryDependencies ++= Seq(
   "net.ixias" %% "ixias"      % "1.1.20",
   "net.ixias" %% "ixias-play" % "1.1.20",
   "mysql"      % "mysql-connector-java" % "5.1.+",
+  "net.ruippeixotog" %% "scala-scraper" % "2.2.0",
 )
