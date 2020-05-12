@@ -11,11 +11,11 @@ case class JsValueReadsDocument(
 object JsValueReadsDocument {
   implicit val documentReads = Json.reads[JsValueReadsDocument]
 
-  def toWithNoId(document: JsValueReadsDocument, uid: User.Id): Document.WithNoId = {
+  def toWithNoId(document: JsValueReadsDocument, uid: User.Id, title: Option[String]): Document.WithNoId = {
     Document(
       url   = document.url,
       uid   = uid,
-      title = Some("test title")
+      title = title
     )
   }  
 }

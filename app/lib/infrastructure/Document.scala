@@ -8,10 +8,13 @@ class DocumentBrowser()(implicit ec: ExecutionContext)
 
 object DocumentBrowser {
 
-  val browser = JsoupBrowser()
+  lazy val browser = JsoupBrowser()
   
-  def getTitle(url: String): Future[String] = {
-    val doc = browser.get(url)
-    Future.successful(doc.title)
+  def getTitle(url: String): Future[Option[String]] = {
+    val title = browser.get(url).title
+    title.isEmpty match {
+      case true  => Future.successful(None)
+      case false => Future.successful(Some(title))
+    }
   }
 }
