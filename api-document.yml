@@ -308,6 +308,3 @@ definitions:
       url:
         type: "string"
         description: "URL"
-      username:
-        type: "string"
-        description: "ユーザ名"
