@@ -18,8 +18,12 @@ extends BaseController {
 
   def delete(id: Long) = (Action andThen AuthenticationAction()).async { implicit request =>
     for {
-      Some(document) <- DocumentRepository.get(Document.Id(id))
-      _              <- DocumentRepository.remove(document.id)
-    } yield NoContent
+      documentOpt <- DocumentRepository.remove(Document.Id(id))
+    } yield {
+      documentOpt match {
+        case Some(document) => NoContent
+        case None           => NotFound
+      }
+    }
   }
 }
