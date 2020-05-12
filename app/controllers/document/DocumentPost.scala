@@ -30,7 +30,7 @@ extends BaseController with BaseExtensionMethods{
       case Left(error) => Future.successful(error)
       case Right(document) => {
         for {
-          browser <- DocumentBrowser.get(document.url)
+          browser <- DocumentBrowser.getTitle(document.url)
           _       <- DocumentRepository.add(JsValueReadsDocument.toWithNoId(document, uid))
         } yield Ok(browser)
       }

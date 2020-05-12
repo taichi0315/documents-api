@@ -7,7 +7,11 @@ import net.ruippeixotog.scalascraper.browser.JsoupBrowser
 class DocumentBrowser()(implicit ec: ExecutionContext)
 
 object DocumentBrowser {
-  
-  def get(url: String): Future[String] = Future.successful("test")
 
+  val browser = JsoupBrowser()
+  
+  def getTitle(url: String): Future[String] = {
+    val doc = browser.get(url)
+    Future.successful(doc.title)
+  }
 }
