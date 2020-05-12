@@ -13,8 +13,9 @@ object JsValueReadsDocument {
 
   def toWithNoId(document: JsValueReadsDocument, uid: User.Id): Document.WithNoId = {
     Document(
-      document.url,
-      uid
+      url   = document.url,
+      uid   = uid,
+      title = Some("test title")
     )
   }  
 }

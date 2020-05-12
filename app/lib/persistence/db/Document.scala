@@ -29,25 +29,26 @@ case class DocumentTable[P <: JdbcProfile]()(implicit val driver: P)
   class Table(tag: Tag) extends BasicTable(tag, "documents") {
     import Document._
     // Columns
-    /* @1 */ def id        = column[Id]            ("id",         O.UInt64, O.PrimaryKey, O.AutoInc)
-    /* @2 */ def url       = column[String]        ("url",        O.Utf8Char255)
-    /* @3 */ def userId    = column[User.Id]       ("user_id",    O.UInt64)
-    /* @4 */ def updatedAt = column[LocalDateTime] ("updated_at", O.TsCurrent)
-    /* @5 */ def createdAt = column[LocalDateTime] ("created_at", O.Ts)
+    /* @1 */ def id        = column[Id]             ("id",         O.UInt64, O.PrimaryKey, O.AutoInc)
+    /* @2 */ def url       = column[String]         ("url",        O.Utf8Char255)
+    /* @3 */ def userId    = column[User.Id]        ("user_id",    O.UInt64)
+    /* @4 */ def title     = column[Option[String]] ("title",      O.Utf8Char255)
+    /* @5 */ def updatedAt = column[LocalDateTime]  ("updated_at", O.TsCurrent)
+    /* @6 */ def createdAt = column[LocalDateTime]  ("created_at", O.Ts)
 
     type TableElementTuple = (
-      Option[Id], String, User.Id, LocalDateTime, LocalDateTime
+      Option[Id], String, User.Id, Option[String], LocalDateTime, LocalDateTime
     )
 
     // DB <=> Scala の相互のmapping定義
-    def * = (id.?, url, userId, updatedAt, createdAt) <> (
+    def * = (id.?, url, userId, title, updatedAt, createdAt) <> (
       // Tuple(table) => Model
       (t: TableElementTuple) => Document(
-        t._1, t._2, t._3, t._4, t._5
+        t._1, t._2, t._3, t._4, t._5, t._6
       ),
       // Model => Tuple(table)
       (v: TableElementType) => Document.unapply(v).map { t => (
-        t._1, t._2, t._3, LocalDateTime.now(), t._5
+        t._1, t._2, t._3, t._4, LocalDateTime.now(), t._6
       )}
     )
   }

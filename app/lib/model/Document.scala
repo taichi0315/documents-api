@@ -11,6 +11,7 @@ case class Document(
   id:        Option[Id],
   url:       String,
   uid:       User.Id,
+  title:     Option[String],
   updatedAt: LocalDateTime = NOW,
   createdAt: LocalDateTime = NOW
 ) extends EntityModel[Id]
@@ -25,12 +26,13 @@ object Document {
   type EmbeddedId = Entity.EmbeddedId[Id, Document]
 
   // INSERT時のIDがAutoincrementのため,IDなしであることを示すオブジェクトに変換
-  def apply(url: String, uid: User.Id): WithNoId = {
+  def apply(url: String, uid: User.Id, title: Option[String]): WithNoId = {
     new Entity.WithNoId(
       new Document(
         id     = None,
         url    = url,
-        uid    = uid
+        uid    = uid,
+        title  = title
       )
     )
   }
