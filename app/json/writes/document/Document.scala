@@ -6,6 +6,7 @@ import play.api.libs.json._
 import lib.model.{User, Document}
 
 case class JsValueWritesDocument(
+  id:       Long,
   url:      String,
   username: String,
 )
@@ -16,6 +17,7 @@ object JsValueWritesDocument {
 
   def toWrites(document: Document.EmbeddedId, user: User.EmbeddedId): JsValueWritesDocument = {
     JsValueWritesDocument(
+      id       = document.id,
       url      = document.v.url,
       username = user.v.username
     )
