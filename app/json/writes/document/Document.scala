@@ -9,6 +9,7 @@ case class JsValueWritesDocument(
   id:       Long,
   url:      String,
   username: String,
+  title:    Option[String]
 )
 
 object JsValueWritesDocument {
@@ -19,7 +20,8 @@ object JsValueWritesDocument {
     JsValueWritesDocument(
       id       = document.id,
       url      = document.v.url,
-      username = user.v.username
+      username = user.v.username,
+      title    = document.v.title
     )
   }
 }
