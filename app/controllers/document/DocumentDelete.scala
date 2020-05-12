@@ -6,6 +6,8 @@ import play.api.mvc._
 import play.api.libs.json._
 import scala.concurrent.{Future, ExecutionContext}
 
+import mvc.action.AuthenticationAction
+
 import lib.model.Document
 import lib.persistence.default.DocumentRepository
 
@@ -14,7 +16,7 @@ class DocumentDeleteController @Inject()(
 ) (implicit val ec: ExecutionContext) 
 extends BaseController {
 
-  def delete(id: Long) = Action.async { implicit request =>
+  def delete(id: Long) = (Action andThen AuthenticationAction()).async { implicit request =>
     for {
       Some(document) <- DocumentRepository.get(Document.Id(id))
       _              <- DocumentRepository.remove(document.id)
