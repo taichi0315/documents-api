@@ -12,7 +12,7 @@ POST    /auth/valid-email           controllers.auth.AuthValidEmailController.po
 
 GET     /users                      controllers.user.UserListController.findAll
 
-GET     /documents                  controllers.document.DocumentListController.findAll
+GET     /documents                  controllers.document.DocumentListController.list
 POST    /documents                  controllers.document.DocumentPostController.post
 DELETE  /documents/$id<[0-9]+>      controllers.document.DocumentDeleteController.delete(id: Long)
 

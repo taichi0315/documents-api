@@ -19,7 +19,7 @@ class DocumentListController @Inject() (
 ) (implicit val ec: ExecutionContext)
 extends BaseController {
   
-  def findAll() = (Action andThen AuthenticationAction()).async { implicit request =>
+  def list() = (Action andThen AuthenticationAction()).async { implicit request =>
 
     val uid: User.Id = request.authToken.v.uid
 
