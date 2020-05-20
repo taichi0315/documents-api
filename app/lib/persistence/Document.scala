@@ -5,6 +5,8 @@ import ixias.persistence.SlickRepository
 import lib.model.Document
 import slick.jdbc.JdbcProfile
 
+import lib.model.User
+
 // UserRepository: UserTableへのクエリ発行を行うRepository層の定義
 //~~~~~~~~~~~~~~~~~~~~~~
 case class DocumentRepository[P <: JdbcProfile]()(implicit val driver: P)
@@ -13,8 +15,9 @@ case class DocumentRepository[P <: JdbcProfile]()(implicit val driver: P)
 
   import api._
 
-  def list(): Future[Seq[EntityEmbeddedId]] =
+  def listByUserId(uid: User.Id): Future[Seq[EntityEmbeddedId]] =
     RunDBAction(DocumentTable, "slave") {_
+      .filter(_.uid === uid)
       .result
     }
 

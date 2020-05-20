@@ -8,7 +8,6 @@ import lib.model.{User, Document}
 case class JsValueWritesDocument(
   id:       Long,
   url:      String,
-  username: String,
   title:    Option[String]
 )
 
@@ -16,11 +15,10 @@ object JsValueWritesDocument {
 
   implicit val documentWrites = Json.writes[JsValueWritesDocument]
 
-  def toWrites(document: Document.EmbeddedId, user: User.EmbeddedId): JsValueWritesDocument = {
+  def toWrites(document: Document.EmbeddedId): JsValueWritesDocument = {
     JsValueWritesDocument(
       id       = document.id,
       url      = document.v.url,
-      username = user.v.username,
       title    = document.v.title
     )
   }
