@@ -19,16 +19,15 @@ class DocumentListController @Inject() (
 ) (implicit val ec: ExecutionContext)
 extends BaseController {
   
-  def findAll() = (Action andThen AuthenticationAction()).async { implicit request =>
+  def list() = (Action andThen AuthenticationAction()).async { implicit request =>
 
     val uid: User.Id = request.authToken.v.uid
 
     for {
-      documentSeq <- DocumentRepository.list
-      Some(user)  <- UserRepository.get(uid)
+      documentSeq <- DocumentRepository.listByUserId(uid)
     } yield {
       val jsDocumentSeq = documentSeq.map(document =>
-        JsValueWritesDocument.toWrites(document, user)
+        JsValueWritesDocument.toWrites(document)
       )
 
       Ok(Json.toJson(jsDocumentSeq))
