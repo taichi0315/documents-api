@@ -68,5 +68,5 @@
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
-  "volumes": ["~/.ivy2:/root/.ivy2", "~/.sbt:/root/.sbt", "~/.cache:/root/.cache"]
+  "volumes": []
 }
